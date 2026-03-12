@@ -88,8 +88,7 @@ Cardinality constraints were defined for all relationships.
 
 ### ERD Diagram
 
-(Add ERD image here)
-
+![ERD Diagram](images/erd_stage1.png)
 ---
 
 ## 4. Relational Schema & DSD
