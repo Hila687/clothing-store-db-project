@@ -40,6 +40,7 @@ Institution: Jerusalem College of Technology (JCT)
 This section describes the system requirements and defines the system boundaries using a top-down analysis approach.
 
 The system is designed to manage a clothing retail chain, including inventory management, sales tracking, customer management, employee operations, supplier relations, and branch activity.
+
 ---
 
 ## 2. UI Mockups (Google AI Studio)
