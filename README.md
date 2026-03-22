@@ -99,7 +99,7 @@ Each entity and relationship was mapped into tables according to standard databa
 
 The following diagram presents the database schema (DSD) as implemented in pgAdmin, including all tables, primary keys, and foreign key relationships:
 
-![Database Schema](images/dsd_schema.png)
+![Database Schema](stage_1/images/dsd_schema.png)
 
 ---
 
