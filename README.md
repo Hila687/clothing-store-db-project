@@ -1,35 +1,35 @@
-# Database Mini Project – Clothing Store Management System
+### Project Details
 
-Mini-project for the **Database Systems course**.
+**System:** Clothing Store Management System  
+**Selected Unit:** Sales & Retail Operations  
 
-This project designs and implements a database system for managing a clothing retail chain, including sales, inventory, products, customers, employees, suppliers, and branches.
+**Team Members:**  
+- Hila Miller  
+- Hila Rosental  
 
-The repository documents all stages of the system analysis, database design, implementation, data population, and backup process.
+**Institution:** Jerusalem College of Technology (JCT)
 
----
+This document presents **Stage 1** of the Database Systems course project.
 
-# Project Team
+In this stage, the system was analyzed using a top-down approach, and a complete database design was developed, implemented, populated with data, and backed up.
 
-- Hila Miller
-- Hila Rosental
-
-Institution: Jerusalem College of Technology (JCT)
+The system models a clothing retail chain, including inventory, sales, customers, employees, suppliers, and branches.
 
 ---
 
 # Table of Contents
 
 ## Stage 1 – Information System Design
-1. System Analysis (Top-Down)
-2. UI Mockups
-3. ERD – Entity Relationship Diagram
-4. Relational Schema & DSD
-5. Normalization & Functional Dependencies
-6. Database Implementation
-7. Data Population
-8. Backup & Recovery
 
-(Future stages will be added later)
+1. [System Analysis (Top-Down)](#1-system-analysis-top-down)
+2. [UI Mockups](#2-ui-mockups-google-ai-studio)
+3. [ERD – Entity Relationship Diagram](#3-erd--entity-relationship-diagram)
+4. [Relational Schema & DSD](#4-relational-schema--dsd)
+5. [Design Decisions](#5-design-decisions)
+6. [Normalization & Functional Dependencies](#6-normalization--functional-dependencies)
+7. [Database Implementation](#7-database-implementation)
+8. [Data Population](#8-data-population)
+9. [Backup & Recovery](#9-backup--recovery)
 
 ---
 
@@ -45,11 +45,20 @@ The system is designed to manage a clothing retail chain, including inventory ma
 
 ## 2. UI Mockups (Google AI Studio)
 
-(To be completed)
+As part of the top-down system design approach, initial UI mockups were planned in order to represent the future system interface and user interaction.
 
-Planned system screens will be designed using Google AI Studio in order to demonstrate the future system interface and user flow.
+The following screens are intended to demonstrate the main functionalities of the system:
 
-Screenshots will be added in this section.
+### Customer Management Screen
+![Customer Screen](images/ui_customer.png)
+
+### Product Management Screen
+![Product Screen](images/ui_product.png)
+
+### Sales Management Screen
+![Sales Screen](images/ui_sales.png)
+
+These mockups represent a conceptual view of the system and are intended to support the database design. The UI may be refined and expanded in later stages of the project.
 
 ---
 
@@ -88,7 +97,7 @@ Cardinality constraints were defined for all relationships.
 
 ### ERD Diagram
 
-![ERD Diagram](stage_1/images/erd_stage1_final.png)
+![ERD Diagram](images/erd_stage1_final.png)
 ---
 
 ## 4. Relational Schema & DSD
@@ -99,21 +108,74 @@ Each entity and relationship was mapped into tables according to standard databa
 
 The following diagram presents the database schema (DSD) as implemented in pgAdmin, including all tables, primary keys, and foreign key relationships:
 
-![Database Schema](stage_1/images/dsd_schema.png)
+![Database Schema](images/dsd_schema.png)
 
 ---
 
-## 5. Normalization & Functional Dependencies
+## 5. Design Decisions
 
-All relations were analyzed and normalized to at least Third Normal Form (3NF).
+Several design decisions were made during the design of the database in order to ensure that the system would be realistic, scalable, and well-structured.
 
-Functional dependencies were identified for each table, and redundancy was minimized.
+First, the database was designed around the main business processes of a clothing retail chain: product management, inventory tracking, sales, suppliers, employees, customers, and branch activity. The selected entities reflect the core operations of the system and allow future expansion in later project stages.
 
-The schema ensures data consistency, eliminates update anomalies, and maintains logical data integrity.
+In addition, some supporting dictionary tables, such as City, Season, Category, and PaymentMethod, were kept relatively small, since they represent fixed reference data rather than large transactional data. For this reason, these tables naturally contain fewer rows than the main operational tables.
+
+Two JSON attributes were included in the schema in order to support flexible and dynamic data that may vary between records. This decision allows the system to store additional information without changing the relational structure whenever small variations are needed.
+
+Different data population methods were also chosen according to the nature of each table. Smaller and more controlled tables were populated manually through CSV files, larger tables with realistic synthetic data were generated using Mockaroo, and additional programmatic generation was performed using Python. This combination made it possible to balance control, realism, and efficiency.
+
+Finally, larger volumes of data were assigned mainly to the central business tables in order to better simulate a real retail environment and support future querying, testing, and validation tasks.
 
 ---
 
-## 6. Database Implementation
+## 6. Normalization & Functional Dependencies
+
+All relations in the database were analyzed and normalized to at least Third Normal Form (3NF), in order to reduce redundancy and prevent update anomalies.
+
+Functional dependencies were defined for each table based on their primary keys and relationships.
+
+Examples of functional dependencies in the system:
+
+- city_id → city_name  
+
+- branch_id → branch_name, branch_status, phone_number, opening_date, city_id  
+
+- supplier_id → supplier_name, contact_person, phone_number, email, supplier_status, contract_start_date, city_id  
+
+- category_id → category_name  
+- season_id → season_name  
+
+- product_id → product_name, brand, target_audience, base_price, product_status, extra_attributes, supplier_id, season_id, category_id  
+
+- customer_id → first_name, last_name, phone_number, email, join_date, customer_status, preferences, city_id  
+
+- employee_id → first_name, last_name, phone_number, email, salary, role, hire_date, branch_id  
+
+- inventory_id → quantity_in_stock, color, size, shelf_location, min_stock_level, last_restock_date, branch_id, product_id  
+
+- sale_id → sale_date, total_amount, sale_status, receipt_number, customer_id, employee_id, branch_id, payment_method_id  
+
+- payment_method_id → payment_method_name  
+
+For the associative table:
+
+- (sale_id, inventory_id) → quantity, unit_price, discount_percent, final_price, item_status  
+
+Each table was designed so that all non-key attributes depend only on the primary key, with no partial or transitive dependencies.
+
+All relations are in at least Third Normal Form (3NF), and most also satisfy Boyce-Codd Normal Form (BCNF), since every determinant is a candidate key.
+
+This normalization ensures:
+
+- elimination of redundant data  
+- improved data consistency  
+- prevention of insertion, update, and deletion anomalies  
+
+As a result, the database schema is well-structured, efficient, and suitable for scalable system development.
+
+---
+
+## 7. Database Implementation
 
 The database was implemented using PostgreSQL through pgAdmin.
 
@@ -123,14 +185,15 @@ The schema was created using the file:
 
 Additional supporting scripts include:
 
+- insertTables.sql - inserts the data to the tables
 - dropTables.sql – removes all tables in the correct dependency order
 - selectAll.sql – used to retrieve and validate data from all tables
 
 ---
 
-## 7. Data Population
+## 8. Data Population
 
-The database was populated using a combination of three different methods, as required by the project instructions. Each method was used for different types of data based on its characteristics and advantages.
+The database was populated using a combination of three different methods, as required by the project instructions. Each method was selected based on the characteristics of the data and the level of control or automation needed.
 
 ---
 
@@ -170,11 +233,21 @@ Additionally, some fields were configured to include random NULL values, as requ
 
 ### 3. Programmatic Data Generation (Python)
 
-A Python script was used to generate and insert data programmatically for additional tables.
+A Python script was used to generate SQL INSERT statements programmatically.
 
-This method was used to efficiently create larger datasets and simulate realistic relationships between entities.
+These statements were then executed in PostgreSQL in order to populate additional tables.
 
-The script allowed flexibility in controlling data volume and structure, and was particularly useful for testing scalability and data integrity.
+This method enabled efficient creation of large datasets while maintaining control over relationships and data consistency.
+
+---
+
+### 4. Manual SQL INSERT Statements
+
+In addition to automated methods, manual SQL INSERT statements were used for selected small dictionary tables.
+
+These inserts were executed directly through pgAdmin.
+
+This approach demonstrates direct interaction with the database using SQL and provides full control over specific data values when needed.
 
 ---
 
@@ -182,23 +255,63 @@ The script allowed flexibility in controlling data volume and structure, and was
 
 - Multiple tables contain at least 500 records, as required  
 - Some tables contain significantly larger datasets (20,000 rows)  
+- Dictionary tables contain fewer records, as they represent static reference data  
 - Random NULL values were included in optional fields  
-- Data was generated to maintain referential integrity between tables  
+- Data was generated to maintain referential integrity between tables
+
+### Screenshots
+
+#### CSV Import
+![CSV Import](images/csv_import.png)
+
+#### Mockaroo Data Generation
+![Mockaroo](images/mockaroo.png)
+
+#### Python Data Generation
+![Python](images/python.png)
+
+#### Manual SQL INSERT
+![Manual Insert](images/manual_insert.png)
 
 ---
 
-## 8. Backup & Recovery
+## 9. Backup & Recovery
 
-A full database backup was created using pgAdmin.
+A full backup of the database was created using pgAdmin’s built-in backup tool.
 
-The backup includes both structure and data.
+The backup was performed after the database schema had been fully created and populated with data, in order to ensure that both the database structure and its contents were preserved.
 
-To verify its correctness, the backup was restored into a new database instance.
+The backup file includes:
 
-The restoration process successfully recreated all tables and data, confirming the validity of the backup.
+- All database tables
+- Primary and foreign key constraints
+- The stored data inserted into the tables
 
-Backup file:
-- backup_2026-03-19.backup
+The backup was saved in a dedicated backup file:
+
+- `backup_2026-03-21.backup`
+
+To verify that the backup was valid and usable, a restoration test was performed on a separate database instance.
+
+During the restore process, the backup file was loaded into a new database, and the restored system was checked to confirm that:
+
+- all tables were recreated successfully
+- the relationships between tables were preserved
+- the data was restored correctly
+- the database could be queried without errors
+
+This process confirmed that the backup is valid and that the system can be reconstructed from the backup file if needed.
+
+The backup and restore process is an important part of the project, since it ensures database reliability, recoverability, and protection against data loss.
+
+### Backup Process
+
+![Backup Screenshot](images/backup.png)
+
+### Restore Process
+
+![Restore Screenshot](images/restore.png)
+
 ---
 
 ## How to Run the Project
@@ -208,8 +321,3 @@ Backup file:
 3. Use selectAll.sql to verify the data
 4. Alternatively, restore the database using the backup file
 
----
-
-# Stage 2 – (To be added later)
-
-This section will be added when Stage 2 of the project begins.
