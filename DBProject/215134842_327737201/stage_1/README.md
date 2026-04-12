@@ -49,7 +49,7 @@ As part of the top-down system design approach, initial UI mockups were planned 
 
 The following screens are intended to demonstrate the main functionalities of the system:
 ### Dashboard Screen
-![Dashboard Screen](images/ui_ui_dashboard.png)
+![Dashboard Screen](images/ui_dashboard.png)
 
 ### Customer Management Screen
 ![Customer Screen](images/ui_customer1.png)
