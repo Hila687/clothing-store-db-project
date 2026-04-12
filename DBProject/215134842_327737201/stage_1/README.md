@@ -48,9 +48,12 @@ The system is designed to manage a clothing retail chain, including inventory ma
 As part of the top-down system design approach, initial UI mockups were planned in order to represent the future system interface and user interaction.
 
 The following screens are intended to demonstrate the main functionalities of the system:
+### Dashboard Screen
+![Dashboard Screen](images/ui_ui_dashboard.png)
 
 ### Customer Management Screen
-![Customer Screen](images/ui_customer.png)
+![Customer Screen](images/ui_customer1.png)
+![Customer Screen](images/ui_customer2.png)
 
 ### Product Management Screen
 ![Product Screen](images/ui_product.png)
