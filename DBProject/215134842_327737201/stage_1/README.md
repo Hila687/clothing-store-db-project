@@ -122,6 +122,8 @@ In addition, some supporting dictionary tables, such as City, Season, Category, 
 
 Two JSON attributes were included in the schema in order to support flexible and dynamic data that may vary between records. This decision allows the system to store additional information without changing the relational structure whenever small variations are needed.
 
+Significant DATE attributes were implemented across key entities (such as sale_date, hire_date, and contract_start_date) to accurately track temporal data.
+
 Different data population methods were also chosen according to the nature of each table. Smaller and more controlled tables were populated manually through CSV files, larger tables with realistic synthetic data were generated using Mockaroo, and additional programmatic generation was performed using Python. This combination made it possible to balance control, realism, and efficiency.
 
 Finally, larger volumes of data were assigned mainly to the central business tables in order to better simulate a real retail environment and support future querying, testing, and validation tasks.
@@ -239,6 +241,8 @@ These statements were then executed in PostgreSQL in order to populate additiona
 
 This method enabled efficient creation of large datasets while maintaining control over relationships and data consistency.
 
+Tables populated using this method: Sale, Sale_Inventory (Sale Items), Product, and Inventory.
+
 ---
 
 ### 4. Manual SQL INSERT Statements
@@ -254,7 +258,7 @@ This approach demonstrates direct interaction with the database using SQL and pr
 ### Data Volume & Characteristics
 
 - Multiple tables contain at least 500 records, as required  
-- Some tables contain significantly larger datasets (20,000 rows)  
+- The Sale and Sale_Inventory tables contain massive datasets of over 20,000 records each, generated via the Python script to simulate a high-volume retail environment.  
 - Dictionary tables contain fewer records, as they represent static reference data  
 - Random NULL values were included in optional fields  
 - Data was generated to maintain referential integrity between tables
