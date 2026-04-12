@@ -1,4 +1,4 @@
-### Project Details
+# Project Details
 
 **System:** Clothing Store Management System  
 **Selected Unit:** Sales & Retail Operations  
