@@ -98,7 +98,7 @@ Relationships include:
 
 Cardinality constraints were defined for all relationships.
 
-### ERD Diagram
+### ERD Diagram 
 
 ![ERD Diagram](images/erd_stage1_final.png)
 ---
@@ -110,6 +110,12 @@ The ERD was translated into a relational schema and implemented in PostgreSQL.
 Each entity and relationship was mapped into tables according to standard database design principles.
 
 The following diagram presents the database schema (DSD) as implemented in pgAdmin, including all tables, primary keys, and foreign key relationships:
+
+### DSD Diagram erdplus
+
+![Database Schema](images/dsd_erdPlus.png)
+
+### ERD Diagram pgAdmin
 
 ![Database Schema](images/dsd_schema.png)
 
