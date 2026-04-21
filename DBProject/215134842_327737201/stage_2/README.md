@@ -84,7 +84,7 @@ ORDER BY total_sales_amount DESC;
 
 #### Query Result
 
-![Query 1 Result](images/stage2/query1_output.png)
+![Query 1 Result](images/query1_output.png)
 
 ---
 
@@ -112,7 +112,7 @@ ORDER BY total_quantity_sold DESC;
 
 #### Query Result
 
-![Query 2 Result](stage2/images/query2_output.png)
+![Query 2 Result](images/query2_output.png)
 
 ---
 
