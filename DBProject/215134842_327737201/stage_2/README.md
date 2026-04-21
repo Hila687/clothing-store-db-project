@@ -138,11 +138,11 @@ ORDER BY total_spent DESC;
 
 #### Query 3A Execution
 
-![Query 3A Run](stage2/images/query3.1_run.png)
+![Query 3A Run](images/query3.1_run.png)
 
 #### Query 3A Result
 
-![Query 3A Result](stage2/images/query3.1_output.png)
+![Query 3A Result](images/query3.1_output.png)
 
 ---
 
@@ -174,11 +174,11 @@ ORDER BY total_spent DESC;
 
 #### Query 3B Execution
 
-![Query 3B Run](stage2/images/query3.2_run.png)
+![Query 3B Run](images/query3.2_run.png)
 
 #### Query 3B Result
 
-![Query 3B Result](stage2/images/query3.2_output.png)
+![Query 3B Result](images/query3.2_output.png)
 
 #### Comparison Between Query 3A and Query 3B
 
@@ -221,11 +221,11 @@ ORDER BY p.product_id;
 
 #### Query 4A Execution
 
-![Query 4A Run](stage2/images/query4.1_run.png)
+![Query 4A Run](images/query4.1_run.png)
 
 #### Query 4A Result
 
-![Query 4A Result](stage2/images/query4.1_output.png)
+![Query 4A Result](images/query4.1_output.png)
 
 ---
 
@@ -255,11 +255,11 @@ ORDER BY p.product_id;
 
 #### Query 4B Execution
 
-![Query 4B Run](stage2/images/query4.2_run.png)
+![Query 4B Run](images/query4.2_run.png)
 
 #### Query 4B Result
 
-![Query 4B Result](stage2/images/query4.2_output.png)
+![Query 4B Result](images/query4.2_output.png)
 
 #### Comparison Between Query 4A and Query 4B
 
@@ -290,10 +290,10 @@ Detailed explanations, SQL code, screenshots, and comparisons will be added afte
 ```
 
 **Execution Screenshot:**
-![Query 5 Run](stage2/images/query5_run.png)
+![Query 5 Run](images/query5_run.png)
 
 **Result Screenshot:**
-![Query 5 Result](stage2/images/query5_result.png)
+![Query 5 Result](images/query5_result.png)
 
 ---
 
@@ -309,10 +309,10 @@ Detailed explanations, SQL code, screenshots, and comparisons will be added afte
 ```
 
 **Execution Screenshot:**
-![Query 6 Run](stage2/images/query6_run.png)
+![Query 6 Run](images/query6_run.png)
 
 **Result Screenshot:**
-![Query 6 Result](stage2/images/query6_result.png)
+![Query 6 Result](images/query6_result.png)
 
 ---
 
@@ -340,7 +340,7 @@ GROUP BY p.product_id, p.base_price
 HAVING SUM(si.quantity) < 80;
 ```
 
-![Update 1 Before](stage2/images/update1_before.png)
+![Update 1 Before](images/update1_before.png)
 
 #### Update Statement
 
@@ -375,7 +375,7 @@ GROUP BY p.product_id, p.base_price
 HAVING SUM(si.quantity) < 80;
 ```
 
-![Update 1 After](stage2/images/update1_after.png)
+![Update 1 After](images/update1_after.png)
 
 ---
 
@@ -402,7 +402,7 @@ WHERE NOT EXISTS (
 );
 ```
 
-![Update 2 Before](stage2/images/update2_before.png)
+![Update 2 Before](images/update2_before.png)
 
 #### Update Statement
 
@@ -438,7 +438,7 @@ WHERE NOT EXISTS (
 );
 ```
 
-![Update 2 After](stage2/images/update2_after.png)
+![Update 2 After](images/update2_after.png)
 
 ---
 
@@ -472,7 +472,7 @@ JOIN (
 ORDER BY i.product_id, i.inventory_id;
 ```
 
-![Update 3 Before](stage2/images/update3_before.png)
+![Update 3 Before](images/update3_before.png)
 
 #### Update Statement
 
@@ -514,7 +514,7 @@ JOIN (
 ORDER BY i.product_id, i.inventory_id;
 ```
 
-![Update 3 After](stage2/images/update3_after.png)
+![Update 3 After](images/update3_after.png)
 
 ---
 
@@ -532,7 +532,7 @@ Detailed explanations, SQL code, and screenshots will be added after receiving t
 -- To be added
 ```
 
-![Delete 1 Before/After](images/stage2/delete1.png)
+![Delete 1 Before/After](images/delete1.png)
 
 ---
 
@@ -545,7 +545,7 @@ Detailed explanations, SQL code, and screenshots will be added after receiving t
 -- To be added
 ```
 
-![Delete 2 Before/After](stage2/images/delete2.png)
+![Delete 2 Before/After](images/delete2.png)
 
 ---
 
@@ -558,7 +558,7 @@ Detailed explanations, SQL code, and screenshots will be added after receiving t
 -- To be added
 ```
 
-![Delete 3 Before/After](stage2/images/delete3.png)
+![Delete 3 Before/After](images/delete3.png)
 
 ---
 
@@ -594,7 +594,7 @@ SET base_price = -10
 WHERE product_id = 1;
 ```
 
-![Constraint 1 Violation](stage2/images/constraint1_violation.png)
+![Constraint 1 Violation](images/constraint1_violation.png)
 
 ---
 
@@ -628,7 +628,7 @@ SET quantity_in_stock = -5
 WHERE inventory_id = 1;
 ```
 
-![Constraint 2 Violation](stage2/images/constraint2_violation.png)
+![Constraint 2 Violation](images/constraint2_violation.png)
 
 ---
 
@@ -662,7 +662,7 @@ SET discount_percent = 150
 WHERE sale_id = [EXISTING_SALE_ID] AND inventory_id = [EXISTING_INVENTORY_ID];
 ```
 
-![Constraint 3 Violation](stage2/images/constraint3_violation.png)
+![Constraint 3 Violation](images/constraint3_violation.png)
 
 ---
 
@@ -707,7 +707,7 @@ WHERE product_id = 190;
 
 #### ROLLBACK Demonstration
 
-![Rollback Demonstration](stage2/images/rollback_demo.png)
+![Rollback Demonstration](images/rollback_demo.png)
 
 ---
 
@@ -726,7 +726,7 @@ If a separate COMMIT demonstration was performed, it can be documented here usin
 -- To be completed if COMMIT was documented separately
 ```
 
-![Commit Demonstration](stage2/images/commit_demo.png)
+![Commit Demonstration](images/commit_demo.png)
 
 ---
 
@@ -745,10 +745,10 @@ Detailed explanations, SQL statements, screenshots, and conclusions will be adde
 ```
 
 **Before Index:**
-![Index 1 Before](stage2/images/index1_before.png)
+![Index 1 Before](images/index1_before.png)
 
 **After Index:**
-![Index 1 After](stage2/images/index1_after.png)
+![Index 1 After](images/index1_after.png)
 
 ---
 
@@ -762,10 +762,10 @@ Detailed explanations, SQL statements, screenshots, and conclusions will be adde
 ```
 
 **Before Index:**
-![Index 2 Before](stage2/images/index2_before.png)
+![Index 2 Before](images/index2_before.png)
 
 **After Index:**
-![Index 2 After](stage2/images/index2_after.png)
+![Index 2 After](images/index2_after.png)
 
 ---
 
@@ -779,10 +779,10 @@ Detailed explanations, SQL statements, screenshots, and conclusions will be adde
 ```
 
 **Before Index:**
-![Index 3 Before](stage2/images/index3_before.png)
+![Index 3 Before](images/index3_before.png)
 
 **After Index:**
-![Index 3 After](stage2/images/index3_after.png)
+![Index 3 After](images/index3_after.png)
 
 ---
 
