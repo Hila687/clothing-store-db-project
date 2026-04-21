@@ -273,46 +273,179 @@ The `LEFT JOIN` version requires greater care, especially regarding the placemen
 
 ---
 
-### Additional SELECT Queries Completed by the Second Team Member
+### Query 5 – Low Inventory Report for Goods Order
 
-The following `SELECT` queries were implemented by the second team member.
-Detailed explanations, SQL code, screenshots, and comparisons will be added after receiving the final material.
+This query identifies inventory items that are below their minimum stock level.  
+For each inventory record, it returns the product name, current quantity in stock, minimum required stock level, and the branch in which the item is located.
 
-#### Query 5 – [TO BE COMPLETED]
+This query is useful for operational management, as it helps identify products that require restocking and supports decision-making for supplier orders.
 
-**Description:**
-*To be added.*
+~~~sql
+SELECT 
+    p.product_name, 
+    i.quantity_in_stock, 
+    i.min_stock_level, 
+    b.branch_name
+FROM Inventory i
+JOIN Product p ON i.product_id = p.product_id
+JOIN Branch b ON i.branch_id = b.branch_id
+WHERE i.quantity_in_stock < i.min_stock_level
+ORDER BY i.quantity_in_stock ASC;
+~~~
 
-**SQL:**
+#### Query Result
 
-```sql
--- To be added
-```
-
-**Execution Screenshot:**
-![Query 5 Run](images/query5_run.png)
-
-**Result Screenshot:**
-![Query 5 Result](images/query5_result.png)
+![Query 5 Result](images/query5_output.png)
 
 ---
 
-#### Query 6 – [TO BE COMPLETED]
+### Query 6 – Active Suppliers and Their Products
 
-**Description:**
-*To be added.*
+This query retrieves all active suppliers along with the products they supply.  
+For each supplier, the query returns the supplier name, product name, and contract start date.
 
-**SQL:**
+This query demonstrates the relationship between suppliers and products and is useful for tracking supplier activity and product sourcing.
 
-```sql
--- To be added
-```
+~~~sql
+SELECT 
+    s.supplier_name, 
+    p.product_name, 
+    s.contract_start_date
+FROM Supplier s
+JOIN Product p ON s.supplier_id = p.supplier_id
+WHERE s.supplier_status = 'active'
+ORDER BY s.contract_start_date DESC;
+~~~
 
-**Execution Screenshot:**
-![Query 6 Run](images/query6_run.png)
+#### Query Result
 
-**Result Screenshot:**
-![Query 6 Result](images/query6_result.png)
+![Query 6 Result](images/query6_output.png)
+
+---
+
+### Query 7A – Customers Who Did Not Purchase in a Recent Period (NOT EXISTS)
+
+This query identifies customers who did not make any purchases after a selected date.  
+It returns the customer’s first name, last name, and join date.
+
+This version uses `NOT EXISTS` to check the absence of sales records in the specified time period.
+
+~~~sql
+SELECT c.first_name, c.last_name, c.join_date
+FROM Customer c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM Sale s 
+    WHERE s.customer_id = c.customer_id 
+      AND s.sale_date > '2024-11-01'
+);
+~~~
+
+#### Query 7A Execution
+
+![Query 7A Run](images/query7.1_run.png)
+
+#### Query 7A Result
+
+![Query 7A Result](images/query7.1_output.png)
+
+---
+
+### Query 7B – Customers Who Did Not Purchase in a Recent Period (LEFT JOIN + IS NULL)
+
+This query returns the same logical result as Query 7A, but uses a different SQL approach.
+
+Instead of checking for non-existence, it attempts to join recent sales and filters customers for whom no matching records were found using `IS NULL`.
+
+~~~sql
+SELECT c.first_name, c.last_name, c.join_date
+FROM Customer c
+LEFT JOIN Sale s 
+    ON c.customer_id = s.customer_id 
+   AND s.sale_date > '2024-11-01'
+WHERE s.sale_id IS NULL;
+~~~
+
+#### Query 7B Execution
+
+![Query 7B Run](images/query7.2_run.png)
+
+#### Query 7B Result
+
+![Query 7B Result](images/query7.2_output.png)
+
+#### Comparison Between Query 7A and Query 7B
+
+Both queries return customers who have not made any purchases after the selected date.
+
+- Query 7A uses `NOT EXISTS`, which directly checks for the absence of matching records.
+- Query 7B uses `LEFT JOIN` and filters rows where no matching records were found using `IS NULL`.
+
+The `NOT EXISTS` approach is generally clearer and less prone to logical errors, while the `LEFT JOIN` approach requires careful placement of conditions inside the `ON` clause.
+
+---
+
+### Query 8A – Branches with the Highest Number of Sales (GROUP BY)
+
+This query retrieves the branches with the highest number of sales.  
+It groups sales by branch and counts the number of sales per branch, returning the top 5 branches with the highest sales volume.
+
+This query is useful for identifying high-performing branches and supports business analysis and decision-making.
+
+~~~sql
+SELECT b.branch_name, COUNT(s.sale_id) AS total_sales
+FROM Branch b
+JOIN Sale s ON b.branch_id = s.branch_id
+GROUP BY b.branch_name
+ORDER BY total_sales DESC
+LIMIT 5;
+~~~
+
+#### Query 8A Execution
+
+![Query 8A Run](images/query8.1_run.png)
+
+#### Query 8A Result
+
+![Query 8A Result](images/query8.1_output.png)
+
+---
+
+### Query 8B – Branches with the Highest Number of Sales (Subquery)
+
+This query returns similar information to Query 8A, but uses a correlated subquery instead of `GROUP BY`.
+
+For each branch, a subquery calculates the total number of sales.  
+Only branches with more than 50 sales are included in the result.
+
+~~~sql
+SELECT b.branch_name, 
+       (SELECT COUNT(*) 
+        FROM Sale s 
+        WHERE s.branch_id = b.branch_id) AS total_sales
+FROM Branch b
+WHERE (SELECT COUNT(*) 
+       FROM Sale s 
+       WHERE s.branch_id = b.branch_id) > 50
+ORDER BY total_sales DESC;
+~~~
+
+#### Query 8B Execution
+
+![Query 8B Run](images/query8.2_run.png)
+
+#### Query 8B Result
+
+![Query 8B Result](images/query8.2_output.png)
+
+#### Comparison Between Query 8A and Query 8B
+
+Both queries analyze branch performance based on the number of sales.
+
+- Query 8A uses `GROUP BY`, which processes the data in a set-oriented manner and is generally more efficient.
+- Query 8B uses a correlated subquery, which calculates the result separately for each branch and may be less efficient for large datasets.
+
+The `GROUP BY` solution is typically preferred in real-world systems, while the subquery version demonstrates an alternative SQL approach.
 
 ---
 
