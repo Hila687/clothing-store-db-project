@@ -142,9 +142,9 @@ WHERE s.sale_id IS NULL;
 SELECT b.branch_name, COUNT(s.sale_id) AS total_sales
 FROM Branch b
 JOIN Sale s ON b.branch_id = s.branch_id
-GROUP BY b.branch_name
-ORDER BY total_sales DESC
-LIMIT 5;
+GROUP BY b.branch_id, b.branch_name
+HAVING COUNT(s.sale_id) > 50
+ORDER BY total_sales DESC;
 
 --Query 8B - Branches with the most sales using a subquery
 SELECT b.branch_name, 
