@@ -651,47 +651,88 @@ ORDER BY i.product_id, i.inventory_id;
 
 ---
 
+---
+
 ## 4. DELETE Queries
 
-The following `DELETE` queries were implemented by the second team member.
-Detailed explanations, SQL code, and screenshots will be added after receiving the final material.
+### DELETE 1 – Deleting Customers Without Any Purchases
 
-### DELETE 1 – [TO BE COMPLETED]
+This query deletes customers who have never made any purchases in the system.  
+It uses a `NOT EXISTS` subquery to identify customers that are not associated with any records in the `sale` table.
 
-**Description:**
-*To be added.*
+The purpose of this query is to remove irrelevant customer records that have no activity in the system.
 
-```sql
--- To be added
-```
+~~~sql
+DELETE FROM customer c
+WHERE c.email IN ('noa.levi24@example.com', 'daniel.cohen24@example.com')
+  AND NOT EXISTS (
+      SELECT 1
+      FROM sale s
+      WHERE s.customer_id = c.customer_id
+  );
+~~~
 
-![Delete 1 Before/After](images/delete1.png)
+#### Before Deletion
 
----
+![Delete 1 Before](images/delete1_before.png)
 
-### DELETE 2 – [TO BE COMPLETED]
+#### After Deletion
 
-**Description:**
-*To be added.*
-
-```sql
--- To be added
-```
-
-![Delete 2 Before/After](images/delete2.png)
+![Delete 1 After](images/delete1_after.png)
 
 ---
 
-### DELETE 3 – [TO BE COMPLETED]
+### DELETE 2 – Deleting Inventory Records with Zero Stock and No Sales
 
-**Description:**
-*To be added.*
+This query deletes inventory records where the stock quantity is zero and the item has never appeared in any sale.  
+It ensures that only unused inventory records are removed.
 
-```sql
--- To be added
-```
+The query uses a `NOT EXISTS` condition to verify that the inventory item is not referenced in the `sale_inventory` table.
 
-![Delete 3 Before/After](images/delete3.png)
+~~~sql
+DELETE FROM inventory i
+WHERE i.quantity_in_stock = 0
+  AND NOT EXISTS (
+      SELECT 1
+      FROM sale_inventory si
+      WHERE si.inventory_id = i.inventory_id
+  );
+~~~
+
+#### Before Deletion
+
+![Delete 2 Before](images/delete2_before.png)
+
+#### After Deletion
+
+![Delete 2 After](images/delete2_after.png)
+
+---
+
+### DELETE 3 – Deleting Inactive Suppliers Without Associated Products
+
+This query deletes suppliers whose status is `inactive` and who are not associated with any products in the system.
+
+The purpose of this query is to clean up supplier records that are no longer relevant.
+
+~~~sql
+DELETE FROM supplier s
+WHERE s.supplier_status = 'inactive'
+  AND NOT EXISTS (
+      SELECT 1
+      FROM product p
+      WHERE p.supplier_id = s.supplier_id
+  )
+	AND supplier_id < 60;
+~~~
+
+#### Before Deletion
+
+![Delete 3 Before](images/delete3_before.png)
+
+#### After Deletion
+
+![Delete 3 After](images/delete3_after.png)
 
 ---
 
@@ -840,26 +881,21 @@ WHERE product_id = 190;
 
 #### ROLLBACK Demonstration
 
-![Rollback Demonstration](images/rollback_demo.png)
+![Rollback Demonstration](images/rollback_before.png)
+
+![Rollback Demonstration](images/rollback_after.png)
 
 ---
 
 ### Demonstration of COMMIT
 
-*To be added if documented separately.*
-If a separate COMMIT demonstration was performed, it can be documented here using the same structure:
-
 * `BEGIN`
-* `UPDATE`
-* `SELECT`
+* `DELETE`
 * `COMMIT`
 * `SELECT`
-
-```sql
--- To be completed if COMMIT was documented separately
 ```
 
-![Commit Demonstration](images/commit_demo.png)
+![Commit Demonstration](images/commit.png)
 
 ---
 
