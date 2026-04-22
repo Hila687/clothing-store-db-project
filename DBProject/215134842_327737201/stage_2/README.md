@@ -893,7 +893,6 @@ WHERE product_id = 190;
 * `DELETE`
 * `COMMIT`
 * `SELECT`
-```
 
 ![Commit Demonstration](images/commit.png)
 
