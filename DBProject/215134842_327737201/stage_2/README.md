@@ -900,57 +900,75 @@ WHERE product_id = 190;
 
 ## 7. Indexes and Query Optimization
 
-The following indexes and performance comparisons were implemented by the second team member.
-Detailed explanations, SQL statements, screenshots, and conclusions will be added after receiving the final material.
+### Index 1 – Improving Customer-Based Sales Queries
 
-### Index 1 – [TO BE COMPLETED]
+An index was created on the `customer_id` column in the `sale` table in order to improve the performance of queries that retrieve sales records for a specific customer.
 
-**Purpose:**
-*To be added.*
+~~~sql
+CREATE INDEX idx_sale_customer_id
+ON sale(customer_id);
+~~~
 
-```sql
--- To be added
-```
+#### Before Index
 
-**Before Index:**
 ![Index 1 Before](images/index1_before.png)
 
-**After Index:**
+#### After Index
+
 ![Index 1 After](images/index1_after.png)
 
+#### Conclusion
+
+Before creating the index, the database performed a sequential scan (`Seq Scan`) in order to locate the relevant rows.  
+After creating the index, the query execution used an index-based scan, which improved the efficiency of the query by reducing the number of scanned rows.
+
 ---
 
-### Index 2 – [TO BE COMPLETED]
+### Index 2 – Improving Date Range Queries on Sales
 
-**Purpose:**
-*To be added.*
+An index was created on the `sale_date` column in the `sale` table in order to improve the performance of queries that filter sales within a specific date range.
 
-```sql
--- To be added
-```
+~~~sql
+CREATE INDEX idx_sale_sale_date
+ON sale(sale_date);
+~~~
 
-**Before Index:**
+#### Before Index
+
 ![Index 2 Before](images/index2_before.png)
 
-**After Index:**
+#### After Index
+
 ![Index 2 After](images/index2_after.png)
+
+#### Conclusion
+
+Before the index was created, the database scanned the entire `sale` table in order to evaluate the date condition.  
+After the index was added, the query execution became more efficient by allowing the database to directly access the relevant rows based on the indexed date values.
 
 ---
 
-### Index 3 – [TO BE COMPLETED]
+### Index 3 – Improving Product-Based Inventory Queries
 
-**Purpose:**
-*To be added.*
+An index was created on the `product_id` column in the `inventory` table in order to improve the performance of queries that filter or join data based on products.
 
-```sql
--- To be added
-```
+~~~sql
+CREATE INDEX idx_inventory_product_id
+ON inventory(product_id);
+~~~
 
-**Before Index:**
+#### Before Index
+
 ![Index 3 Before](images/index3_before.png)
 
-**After Index:**
+#### After Index
+
 ![Index 3 After](images/index3_after.png)
+
+#### Conclusion
+
+Before creating the index, queries that filtered by `product_id` required scanning a large portion of the table.  
+After the index was added, the database was able to locate the relevant rows more efficiently using the index structure.
 
 ---
 
@@ -958,11 +976,11 @@ Detailed explanations, SQL statements, screenshots, and conclusions will be adde
 
 The following files are included in the Stage 2 submission:
 
-* `select_queries.sql`
-* `update_queries`
+* `select.sql`
+* `update.sql`
+* `delete.sql`
 * `Constraints.sql`
-* `RollbackCommit.sql`
+* `rollback.sql`
 * `Index.sql`
-* `backup2`
 
 Supporting screenshot files are stored in the `stage2/images/` directory and are referenced throughout this document.
