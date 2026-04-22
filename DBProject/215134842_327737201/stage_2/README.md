@@ -36,7 +36,7 @@ The goal of this stage was not only to retrieve information from the database, b
 5. [Constraints](#5-constraints)
 6. [Transaction Management – ROLLBACK and COMMIT](#6-transaction-management--rollback-and-commit)
 7. [Indexes and Query Optimization](#7-indexes-and-query-optimization)
-8. [Stage 2 Files](#8-stage-2-files)](#17-stage-2-files)
+8. [Stage 2 Files](#8-stage-2-files)]
 
 ---
 
@@ -396,9 +396,9 @@ This query is useful for identifying high-performing branches and supports busin
 SELECT b.branch_name, COUNT(s.sale_id) AS total_sales
 FROM Branch b
 JOIN Sale s ON b.branch_id = s.branch_id
-GROUP BY b.branch_name
-ORDER BY total_sales DESC
-LIMIT 5;
+GROUP BY b.branch_id, b.branch_name
+HAVING COUNT(s.sale_id) > 50
+ORDER BY total_sales DESC;
 ~~~
 
 #### Query 8A Execution
