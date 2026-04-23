@@ -21,6 +21,7 @@ Instructor: Shulamit Korob
 The project is divided into multiple stages, each documented separately:
 
 - [Stage 1 – System Design & Database Implementation](DBProject/215134842_327737201/stage_1/README.md)
+- [Stage 1 – Queries & Constrains](DBProject/215134842_327737201/stage_2/README.md)
 
 (Future stages will be added here)
 
