@@ -334,3 +334,8 @@ The backup and restore process is an important part of the project, since it ens
 3. Use selectAll.sql to verify the data
 4. Alternatively, restore the database using the backup file
 
+---
+
+## Stage 2 - Queries & Constrains
+[Stage 2 – Queries & Constrains](DBProject/215134842_327737201/stage_2/README.md)
+
