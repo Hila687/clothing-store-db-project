@@ -8,7 +8,7 @@ SELECT
 FROM branch b
 JOIN sale s
     ON b.branch_id = s.branch_id
-WHERE s.sale_date BETWEEN '2024-01-01' AND '2024-12-31'
+WHERE EXTRACT(YEAR FROM s.sale_date) = 2024
 GROUP BY b.branch_id, b.branch_name
 ORDER BY total_sales_amount DESC;
 
