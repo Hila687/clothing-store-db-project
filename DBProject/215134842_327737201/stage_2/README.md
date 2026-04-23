@@ -1,14 +1,4 @@
-# Project Details
-
-**System:** Clothing Store Management System
-**Selected Unit:** Sales & Retail Operations
-
-**Team Members:**
-
-* Hila Miller
-* Hila Rosental
-
-**Institution:** Jerusalem College of Technology (JCT)
+# Stage 2 – Queries, Constraints, Transactions, and Optimization
 
 This document presents **Stage 2** of the Database Systems course project.
 
@@ -40,8 +30,6 @@ The goal of this stage was not only to retrieve information from the database, b
 9. [Stage 2 Files](#9-stage-2-files)
 
 ---
-
-# Stage 2 – Queries, Constraints, Transactions, and Optimization
 
 ## 1. Stage 2 – Queries, Constraints, Transactions, and Optimization 
 
