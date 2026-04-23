@@ -337,5 +337,5 @@ The backup and restore process is an important part of the project, since it ens
 ---
 
 ## Stage 2 - Queries & Constrains
-[Stage 2 – Queries & Constrains](DBProject/stage_2/README.md)
+[Stage 2 – Queries & Constrains](../stage_2/README.md)
 
