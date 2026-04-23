@@ -36,7 +36,7 @@ The goal of this stage was not only to retrieve information from the database, b
 5. [Constraints](#5-constraints)
 6. [Transaction Management – ROLLBACK and COMMIT](#6-transaction-management--rollback-and-commit)
 7. [Indexes and Query Optimization](#7-indexes-and-query-optimization)
-8. [[Additional Data Dictionary Notes – Constraints and Indexes](#8-Additional-Data-Dictionary-Notes–Constraints-and-Indexes)]
+8. [Additional Data Dictionary Notes – Constraints and Indexes](#8-Additional-Data-Dictionary-Notes–Constraints-and-Indexes)
 9. [Stage 2 Files](#9-stage-2-files)
 
 ---
