@@ -36,13 +36,14 @@ The goal of this stage was not only to retrieve information from the database, b
 5. [Constraints](#5-constraints)
 6. [Transaction Management – ROLLBACK and COMMIT](#6-transaction-management--rollback-and-commit)
 7. [Indexes and Query Optimization](#7-indexes-and-query-optimization)
-8. [Stage 2 Files](#8-stage-2-files)]
+8. [Additional Data Dictionary Notes – Constraints and Indexes](#8-Additional-Data-Dictionary-Notes–Constraints-and-Indexes)
+9. [Stage 2 Files](#9-stage-2-files)
 
 ---
 
 # Stage 2 – Queries, Constraints, Transactions, and Optimization
 
-## 1. Stage 2 – Queries, Constraints, Transactions, and Optimization – Queries, Constraints, Transactions, and Optimization
+## 1. Stage 2 – Queries, Constraints, Transactions, and Optimization 
 
 In this stage, the database designed in Stage 1 was queried and improved using SQL.
 
@@ -65,8 +66,9 @@ In addition, several integrity constraints were added in order to improve data v
 
 ### Query 1 – Sales Summary per Branch in a Date Range
 
-This query presents, for each branch, the number of sales and the total sales amount within a selected date range.
-It is intended for a management dashboard that compares branch performance over time.
+This query presents, for each branch, the number of sales and the total sales amount for the year 2024.
+
+It demonstrates the use of a date field through decomposition of the `sale_date` value using `EXTRACT(YEAR FROM s.sale_date)`, which allows filtering sales by year in a clear and meaningful way.
 
 ```sql
 SELECT
@@ -77,7 +79,7 @@ SELECT
 FROM branch b
 JOIN sale s
     ON b.branch_id = s.branch_id
-WHERE s.sale_date BETWEEN '2024-01-01' AND '2024-12-31'
+WHERE EXTRACT(YEAR FROM s.sale_date) = 2024
 GROUP BY b.branch_id, b.branch_name
 ORDER BY total_sales_amount DESC;
 ```
@@ -889,10 +891,28 @@ WHERE product_id = 190;
 
 ### Demonstration of COMMIT
 
-* `BEGIN`
-* `DELETE`
-* `COMMIT`
-* `SELECT`
+```sql
+BEGIN;
+
+DELETE FROM customer c
+WHERE c.email IN ('noa.levi24@example.com', 'daniel.cohen24@example.com')
+  AND NOT EXISTS (
+      SELECT 1
+      FROM sale s
+      WHERE s.customer_id = c.customer_id
+  );
+
+COMMIT;
+
+SELECT * FROM customer c
+WHERE c.email IN ('noa.levi24@example.com', 'daniel.cohen24@example.com')
+  AND NOT EXISTS (
+      SELECT 1
+      FROM sale s
+      WHERE s.customer_id = c.customer_id
+  );
+
+```
 
 ![Commit Demonstration](images/commit.png)
 
@@ -916,6 +936,21 @@ ON sale(customer_id);
 #### After Index
 
 ![Index 1 After](images/index1_after.png)
+
+#### Performance Comparison
+
+Before creating the index, PostgreSQL performed a sequential scan (`Seq Scan`) on the entire `sale` table in order to find rows where `customer_id = 10`.
+
+- Planning Time: 7.751 ms
+- Execution Time: 20.273 ms
+
+After creating the index `idx_sale_customer_id`, PostgreSQL used a `Bitmap Index Scan`, which allowed direct access to the relevant rows instead of scanning the full table.
+
+- Planning Time: 2.878 ms
+- Execution Time: 0.185 ms
+
+This demonstrates a significant performance improvement. The execution time decreased dramatically, which proves that indexing frequently searched columns can greatly improve query efficiency and scalability.
+
 
 #### Conclusion
 
@@ -941,6 +976,20 @@ ON sale(sale_date);
 
 ![Index 2 After](images/index2_after.png)
 
+#### Performance Comparison
+
+Before creating the index, PostgreSQL performed a sequential scan (`Seq Scan`) on the entire `sale` table in order to filter rows within the selected date range.
+
+- Planning Time: 2.167 ms
+- Execution Time: 1.441 ms
+
+After creating the index `idx_sale_sale_date`, PostgreSQL used a `Bitmap Index Scan`, which allowed faster access to rows based on the indexed `sale_date` values.
+
+- Planning Time: 0.132 ms
+- Execution Time: 0.948 ms
+
+This shows a clear performance improvement. Instead of scanning the entire table, PostgreSQL was able to directly access the relevant rows using the index, which reduced the execution time and improved query efficiency for date-based reports.
+
 #### Conclusion
 
 Before the index was created, the database scanned the entire `sale` table in order to evaluate the date condition.  
@@ -965,6 +1014,20 @@ ON inventory(product_id);
 
 ![Index 3 After](images/index3_after.png)
 
+#### Performance Comparison
+
+Before creating the index, PostgreSQL performed a sequential scan (`Seq Scan`) on the entire `inventory` table in order to find rows where `product_id = 50`.
+
+- Planning Time: 0.172 ms
+- Execution Time: 0.171 ms
+
+After creating the index `idx_inventory_product_id`, PostgreSQL used a `Bitmap Index Scan`, which allowed direct access to the relevant rows instead of scanning the full table.
+
+- Planning Time: 0.112 ms
+- Execution Time: 0.051 ms
+
+This demonstrates a clear performance improvement. The execution time decreased significantly, and PostgreSQL was able to locate the relevant inventory records more efficiently. This is especially important for inventory management queries and product availability checks across branches.
+
 #### Conclusion
 
 Before creating the index, queries that filtered by `product_id` required scanning a large portion of the table.  
@@ -972,15 +1035,80 @@ After the index was added, the database was able to locate the relevant rows mor
 
 ---
 
-## 8. Stage 2 Files
+## 8. Additional Data Dictionary Notes – Constraints and Indexes
+
+### Constraints Motivation
+
+#### Constraint 1 – Product Base Price Must Be Positive
+
+The constraint `chk_product_base_price_positive` was added to ensure that every product has a valid positive price.
+
+A product cannot logically have a price equal to zero or a negative price. Such values would create incorrect business behavior, affect revenue calculations, and lead to invalid reports in sales analysis.
+
+This constraint protects data integrity and prevents invalid product records from being inserted or updated.
+
+---
+
+#### Constraint 2 – Inventory Quantity Must Be Non-Negative
+
+The constraint `chk_inventory_quantity_nonnegative` was added to ensure that inventory stock levels remain realistic.
+
+A negative stock quantity is not possible in a real inventory management system and may indicate incorrect updates or system errors.
+
+This constraint helps maintain accurate stock tracking and prevents invalid inventory states that could affect ordering and sales decisions.
+
+---
+
+#### Constraint 3 – Discount Percent Must Be Between 0 and 100
+
+The constraint `chk_sale_inventory_discount_percent_range` ensures that discount values remain within a valid percentage range.
+
+A discount percentage below 0 or above 100 is logically invalid and may create incorrect sale calculations and financial inconsistencies.
+
+This constraint guarantees that discounts remain meaningful and consistent with real business rules.
+
+---
+
+### Indexes Motivation
+
+#### Index 1 – Index on Sale(customer_id)
+
+The index `idx_sale_customer_id` was created because many business queries search sales records by customer.
+
+Examples include customer purchase history, inactive customer detection, and customer spending analysis.
+
+Without an index, the database would need to scan the entire `sale` table. The index improves query speed and reduces execution time significantly for customer-based reports.
+
+---
+
+#### Index 2 – Index on Sale(sale_date)
+
+The index `idx_sale_sale_date` was created to improve queries that filter sales by date ranges.
+
+Many management reports depend on date filtering, such as monthly sales summaries, seasonal analysis, and branch performance reports for specific periods.
+
+This index allows PostgreSQL to locate relevant rows faster instead of scanning the entire table.
+
+---
+
+#### Index 3 – Index on Inventory(product_id)
+
+The index `idx_inventory_product_id` was created to improve queries involving products and inventory joins.
+
+This is especially useful for stock management, low inventory reports, and product availability checks across branches.
+
+Since `product_id` is frequently used in joins and filtering conditions, indexing this column improves performance and supports faster operational decisions.
+
+---
+
+## 9. Stage 2 Files
 
 The following files are included in the Stage 2 submission:
 
-* `select.sql`
-* `update.sql`
-* `delete.sql`
+* `Queries.sql`
 * `Constraints.sql`
-* `rollback.sql`
+* `RollbackCommit.sql`
 * `Index.sql`
+* `backup2`
 
 Supporting screenshot files are stored in the `stage2/images/` directory and are referenced throughout this document.
