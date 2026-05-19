@@ -188,52 +188,163 @@ Additional integrated data was later generated for empty campaign-related tables
 
 # 7. Views
 
-## View 1 – [TO BE COMPLETED]
+## View 1 – Clothing Store Summary View
 
 ### Description
 
-TBD
+This view belongs to the original clothing store management system.
+
+The view combines the `customer`, `sale`, and `branch` tables in order to generate a summary report about customer purchasing behavior across different branches.
+
+The view presents:
+
+* customer information
+* branch name
+* number of purchases performed by each customer
+* total amount spent by each customer
 
 ### SQL Code
 
-    -- TBD
+```sql
+CREATE VIEW v_clothing_store_summary AS
+SELECT
+    c.customer_id,
+    c.first_name || ' ' || c.last_name AS customer_name,
+    b.branch_name,
+    COUNT(s.sale_id) AS total_purchases,
+    SUM(s.total_amount) AS total_spent
+FROM customer c
+JOIN sale s ON c.customer_id = s.customer_id
+JOIN branch b ON s.branch_id = b.branch_id
+GROUP BY c.customer_id, c.first_name, c.last_name, b.branch_name;
+```
 
 ### Query Examples
 
-    -- TBD
+```sql
+-- Query A: VIP customers who spent more than 1000 total
+SELECT *
+FROM v_clothing_store_summary
+WHERE total_spent > 1000;
+
+-- Query B: Total purchases per branch ordered from highest to lowest
+SELECT branch_name, SUM(total_purchases) AS branch_total_sales
+FROM v_clothing_store_summary
+GROUP BY branch_name
+ORDER BY branch_total_sales DESC;
+```
+
+### View Screenshots
+
+![View 1 Query Results](images/view1_results.png)
 
 ---
 
-## View 2 – [TO BE COMPLETED]
+## View 2 – Campaign Reach Summary View
 
 ### Description
 
-TBD
+This view belongs to the external campaign management system.
+
+The view combines the `advertising_campaign` table with the `campaign_customer` table in order to analyze campaign reach and customer targeting.
+
+The view presents:
+
+* campaign information
+* campaign budget
+* number of targeted customers for each campaign
 
 ### SQL Code
 
-    -- TBD
+```sql
+CREATE VIEW v_campaign_reach_summary AS
+SELECT
+    ac.campaign_id,
+    ac.campaign_name,
+    ac.budget,
+    COUNT(cc.customer_id) AS total_targeted_customers
+FROM advertising_campaign ac
+LEFT JOIN campaign_customer cc
+ON ac.campaign_id = cc.campaign_id
+GROUP BY ac.campaign_id, ac.campaign_name, ac.budget;
+```
 
 ### Query Examples
 
-    -- TBD
+```sql
+-- Query A: Campaigns with no targeted customers
+SELECT *
+FROM v_campaign_reach_summary
+WHERE total_targeted_customers = 0;
+
+-- Query B: Campaigns ordered by highest budget
+SELECT *
+FROM v_campaign_reach_summary
+ORDER BY budget DESC;
+```
+
+### View Screenshots
+
+![View 2 Query Results](images/view2_results.png)
 
 ---
 
-## View 3 – [TO BE COMPLETED]
+## View 3 – Integrated Marketing and Sales View
 
 ### Description
 
-TBD
+This is the main integrated view of Stage 3.
+
+The view combines entities from both systems:
+
+* `advertising_campaign`
+* `campaign_customer`
+* `sale`
+
+The goal of the view is to analyze the real business impact of marketing campaigns on actual store sales.
+
+The view presents:
+
+* campaign information
+* number of targeted customers
+* number of actual purchases performed by customers who participated in campaigns
+
+This view demonstrates the successful integration between the original retail management system and the external marketing campaign system.
 
 ### SQL Code
 
-    -- TBD
+```sql
+CREATE VIEW v_integrated_marketing_sales AS
+SELECT
+    ac.campaign_id,
+    ac.campaign_name,
+    COUNT(DISTINCT cc.customer_id) AS targeted_customers,
+    COUNT(DISTINCT s.sale_id) AS actual_sales
+FROM advertising_campaign ac
+JOIN campaign_customer cc
+ON ac.campaign_id = cc.campaign_id
+JOIN sale s
+ON cc.customer_id = s.customer_id
+GROUP BY ac.campaign_id, ac.campaign_name;
+```
 
 ### Query Examples
 
-    -- TBD
+```sql
+-- Query A: Campaigns that generated the highest number of actual sales
+SELECT *
+FROM v_integrated_marketing_sales
+ORDER BY actual_sales DESC;
 
+-- Query B: Campaigns with 40 or more actual sales
+SELECT *
+FROM v_integrated_marketing_sales
+WHERE actual_sales >= 40;
+```
+
+### View Screenshots
+
+![View 3 Query Results](images/view3_results.png)
 ---
 
 # 8. Stage 3 Files
