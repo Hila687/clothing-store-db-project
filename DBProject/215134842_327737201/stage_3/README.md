@@ -236,7 +236,11 @@ ORDER BY branch_total_sales DESC;
 
 ### View Screenshots
 
-![View 1 Query Results](images/view1_results.png)
+**Query A Results:**
+![View 1 Query A Results](images/view1_query_a.png)
+
+**Query B Results:**
+![View 1 Query B Results](images/view1_query_b.png)
 
 ---
 
@@ -285,7 +289,11 @@ ORDER BY budget DESC;
 
 ### View Screenshots
 
-![View 2 Query Results](images/view2_results.png)
+**Query A Results:**
+![View 2 Query A Results](images/view2_query_a.png)
+
+**Query B Results:**
+![View 2 Query B Results](images/view2_query_b.png)
 
 ---
 
@@ -344,7 +352,12 @@ WHERE actual_sales >= 40;
 
 ### View Screenshots
 
-![View 3 Query Results](images/view3_results.png)
+**Query A Results:**
+![View 3 Query A Results](images/view3_query_a.png)
+
+**Query B Results:**
+![View 3 Query B Results](images/view3_query_b.png)
+
 ---
 
 # 8. Stage 3 Files
