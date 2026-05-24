@@ -1,0 +1,17 @@
+Recommended run order in pgAdmin:
+
+1. 01_function_calculate_customer_marketing_score.sql
+2. 02_function_calculate_employee_bonus.sql
+3. 03_procedure_apply_campaign_discount.sql
+4. 04_procedure_restock_low_inventory.sql
+5. 05_trigger_validate_sale_item.sql
+6. 06_trigger_update_inventory_after_sale_item.sql
+7. 07_main_program_customer_campaign.sql
+8. 08_main_program_employee_inventory.sql
+9. 09_trigger_demo.sql
+
+Important:
+- Run files 1-6 first to create the database objects.
+- Run files 7-9 for screenshots and proof of execution.
+- Main programs currently end with ROLLBACK for safe testing.
+- For final screenshots that need to show a permanent update, replace ROLLBACK with COMMIT in the relevant main program.

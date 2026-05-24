@@ -1,0 +1,3 @@
+-- AlterTable.sql
+-- No schema changes were required for this Stage 4 implementation.
+-- The functions, procedures and triggers use the existing integrated database schema from Stage 3.
