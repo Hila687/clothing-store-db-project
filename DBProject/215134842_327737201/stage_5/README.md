@@ -206,7 +206,7 @@ Customer add/edit form:
 
 ### Error Handling
 
-![Error_handling](images/Error_handling.png)
+![Error Handling](images/Error_handling.png)
 
 ---
 
