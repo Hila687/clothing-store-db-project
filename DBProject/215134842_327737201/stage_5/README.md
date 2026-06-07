@@ -116,10 +116,7 @@ Each CRUD screen supports:
 
 - View all records in a table (Treeview)
 - **Add New** – insert without entering PK (auto-generated)
-- **Load for Update** –- Select a row from the table
-- Load the selected record into the form
-- Edit values
-- Save Changes
+- **Load for Update** – Select a row from the table, Load the selected record into the form, Edit values, Save Changes.
 - **Delete** – by PK (with confirmation)
 - **Refresh** – reload data from database
 - Click a row to fill the PK field
