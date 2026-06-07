@@ -1,6 +1,8 @@
 # Stage 5 – Python GUI Application
 
-This stage adds a **Tkinter desktop GUI** for the integrated clothing store PostgreSQL database.
+This stage implements a graphical desktop application for the integrated Clothing Store Database.
+
+The application was developed in Python using CustomTkinter and PostgreSQL. It provides a user-friendly interface for managing database records, executing analytical queries, viewing database views, and running stored functions and procedures developed in previous stages of the project.
 
 The application connects with **psycopg2**, supports CRUD on core tables, runs existing SQL queries and views, and executes Stage 4 functions and procedures.
 
@@ -114,7 +116,10 @@ Each CRUD screen supports:
 
 - View all records in a table (Treeview)
 - **Add New** – insert without entering PK (auto-generated)
-- **Load for Update** – enter PK, load current values, edit, **Save Update**
+- **Load for Update** –- Select a row from the table
+- Load the selected record into the form
+- Edit values
+- Save Changes
 - **Delete** – by PK (with confirmation)
 - **Refresh** – reload data from database
 - Click a row to fill the PK field
