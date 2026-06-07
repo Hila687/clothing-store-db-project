@@ -162,19 +162,51 @@ After procedures run, **sale** and **inventory** CRUD screens refresh automatica
 
 ## Screenshots for Submission
 
-Capture the following for your project report:
+### Main Menu
 
-1. **Main menu** – all navigation buttons visible
-2. **Customer CRUD** – table with city/loyalty names + add or update form
-3. **Product CRUD** – table with category/supplier/season names
-4. **Sale CRUD** – table with joined customer/employee/branch names
-5. **Inventory CRUD** – table with product and branch names
-6. **Reports / Queries** – Query 1 results with date range
-7. **Reports / Queries** – Query 2 or Query 5 results
-8. **Views screen** – one of the three views displayed
-9. **Functions & Procedures** – function result (marketing score or bonus)
-10. **Functions & Procedures** – procedure success message (discount or restock)
-11. **Error handling** – example friendly error popup (optional)
+![Main Menu](images/Main%20menu.png)
+
+### Customers CRUD
+
+Customer table screen:
+
+![Customers CRUD - Table](images/Customer1.png)
+
+Customer add/edit form:
+
+![Customers CRUD - Form](images/Customer2.png)
+
+### Products CRUD
+
+![Products CRUD](images/Products.png)
+
+### Sales CRUD
+
+![Sales CRUD](images/Sales.png)
+
+### Inventory CRUD
+
+![Inventory CRUD](images/Inventory.png)
+
+### Reports / Queries
+
+![Reports and Queries](images/Reports-Queries.png)
+
+### Database Views
+
+![Database Views](images/Views.png)
+
+### Function Execution
+
+![Function Execution](images/Function.png)
+
+### Procedure Execution
+
+![Procedure Execution](images/Procedure.png)
+
+### Error Handling
+
+![Error Handling](images/Error_handling.png)
 
 ---
 
