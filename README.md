@@ -24,6 +24,7 @@ The project is divided into multiple stages, each documented separately:
 - [Stage 2 – Queries & Constraints](DBProject/215134842_327737201/stage_2/README.md)
 - [Stage 3 – Integration and Views](DBProject/215134842_327737201/stage_3/README.md)
 - [Stage 4 – PL/pgSQL Programming](DBProject/215134842_327737201/stage_4/README.md)
+- [Stage 5 – Python GUI Application](DBProject/215134842_327737201/stage_5/README.md)
 
 (Future stages will be added here)
 
